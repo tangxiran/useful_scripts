@@ -1,0 +1,7 @@
+def write_to_txt(file_list,file_saveplace):
+  out = open(file,'w',encoding='gbk')
+  for i in file_list:
+    out.write(i)
+    out.write('\n')
+   out.close()
+ 
