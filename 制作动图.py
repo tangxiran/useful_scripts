@@ -6,7 +6,7 @@ def create_gif(image_list, gif_name, duration=0.35):
     for image_name in image_list:
         frames.append(imageio.imread(image_name))
     imageio.mimsave(gif_name, frames, 'GIF', duration=duration)
-    return
+    return 0
 # 特定的文件后缀保存，筛选后的特定后缀
 def data_select(data_dir,*args):  #
     import  glob
@@ -18,12 +18,15 @@ def data_select(data_dir,*args):  #
     # file_list = list(glob.glob(data_dir + '/*.png')) + list(glob.glob(data_dir + '/*.jpg'))   # get name list of all .png files
     # data = []
     # print(file_list) # 得到文件的路径列表
+    file_list =sorted(file_list,key = lambda i:len(i),reverse=False)
     return file_list
 
+    # return file_list.sort(key = lambda i:len(i),reverse=True)
+
 def main():
-    image_list = ['cat/1.png', 'cat/2.png', 'cat/3.png', 'cat/4.png', 'cat/5.png', 'cat/6.png']
-    gif_name = 'cat/cat.gif'
-    duration = 0.35
+    image_list = data_select('./','png')
+    gif_name = 'cat.gif'
+    duration = 0.02
     create_gif(image_list, gif_name, duration)
 
 
