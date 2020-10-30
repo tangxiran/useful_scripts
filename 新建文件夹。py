@@ -1,0 +1,9 @@
+def makedir(dir):
+    import os
+    dir = dir.strip()
+    isExist = os.path.exists(dir)
+    if not isExist:
+        os.makedirs(dir)
+        return True
+    else:
+        return False
