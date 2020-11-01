@@ -1,0 +1,17 @@
+import numpy as np
+import scipy.io as io
+
+def makedir(dir):
+    import os
+    dir = dir.strip()
+    isExist = os.path.exists(dir)
+    if not isExist:
+        os.makedirs(dir)
+        return True
+    else:
+        return False
+
+mat_path = 'mat//2d_superoscillation_k.mat'
+makedir("mat//")
+mat = np.load(r"C:\Users\wangxutao\Desktop\2020-寒假学习\上课-机器学习-笔记\统计学习方法实现代码\牛顿法\2020-10-3新數據計算二維的\k_to_save\中心点强度为1分量各自迭代保存的系数结果\2020-8-22\No29000.npy")
+io.savemat(mat_path, {'k': mat})
