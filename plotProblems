@@ -1,0 +1,4 @@
+# 去除坐标轴
+plt.axis("off")
+plt.xticks([]) plt.yticks([]) 
+3.执行上述操作时,需要将其置于 plt.show() 之前,plt.imshow() 之后。
