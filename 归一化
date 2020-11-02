@@ -1,0 +1,6 @@
+# 归一化到0-1 范围
+def normalizationTobetween0and1(array):
+    max_array = np.max(array)
+    min_array = np.min(array)
+    array_nor = (array - min_array) / (max_array - min_array) * 1.0
+    return array_nor
