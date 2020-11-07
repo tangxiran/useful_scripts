@@ -20,6 +20,8 @@ def data_select(data_dir,*args):  #
     # file_list = list(glob.glob(data_dir + '/*.png')) + list(glob.glob(data_dir + '/*.jpg'))   # get name list of all .png files
     # data = []
     # print(file_list) # 得到文件的路径列表
+    
+    file_list = sorted(file_list,key = lambda i: len(i), reverse = False )
     return file_list
 if __name__ == '__main__':
     dir = '../gray_origin'
