@@ -1,0 +1,9 @@
+函数str.rindex()
+或者自定义一个
+def find_last(string,str):
+    last_position=-1
+    while True:
+        position=string.find(str,last_position+1)
+        if position==-1:
+            return last_position
+        last_position=position
