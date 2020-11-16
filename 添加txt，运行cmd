@@ -1,0 +1,9 @@
+# encoding=utf-8
+
+import os
+
+for i in range(10):
+    val = os.system('python ESNs-Based-RC-for-MNIST-Handwritten-Digits-Recognition.py')
+
+    with open("test.txt", "a+") as f:
+      f.write(str(val))  # 这句话自带文件关闭功能，不需要再写f.close()
