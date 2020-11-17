@@ -17,3 +17,13 @@ for i in range(10):
     result  = str(result)
     with open("test.txt", "a+") as f:
       f.write(str(result))  # 这句话自带文件关闭功能，不需要再写f.close()
+
+# encoding=utf-8
+import os
+for i in range(10):
+    # val = os.system('python ESNs-Based-RC-for-MNIST-Handwritten-Digits-Recognition.py')
+    result = os.popen("python ESNs-Based-RC-for-MNIST-Handwritten-Digits-Recognition.py").read()
+    result  = str(result)
+    with open("test.txt", "a") as f:
+
+      f.write(result[int(result.find('Error rate')):])  # 这句话自带文件关闭功能，不需要再写f.close()
