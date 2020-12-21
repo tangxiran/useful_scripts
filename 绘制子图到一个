@@ -1,0 +1,43 @@
+# encoding=utf-8
+
+import matplotlib.pyplot as plt
+import os
+from skimage import io, transform
+
+img_list = []
+img_to_add = r'C:\Users\wangxutao\Desktop\2020-寒假学习\上课-机器学习-笔记\统计学习方法实现代码\粒子群算法修改版\一维中心1个零点半缝宽为022lambda传播曲线10lambda维持\优化10lambda间隔1lambda\z_axis500lambda\0.0\mode_red.png'
+import numpy as np
+for i in np.arange(0.0,10.0+1,1.0):
+    img_to_add_temp  = img_to_add.replace('0.0',str(i))
+
+    img_list.append(img_to_add_temp)
+print(img_list)
+count = 0
+
+plt.subplot(331), plt.imshow(io.imread(img_list[0]))
+plt.subplot(332), plt.imshow(io.imread(img_list[1]))
+plt.subplot(333), plt.imshow(io.imread(img_list[2]))
+plt.subplot(334), plt.imshow(io.imread(img_list[3]))
+plt.subplot(335), plt.imshow(io.imread(img_list[4]))
+plt.subplot(336), plt.imshow(io.imread(img_list[5]))
+plt.subplot(337), plt.imshow(io.imread(img_list[6]))
+plt.subplot(338), plt.imshow(io.imread(img_list[7]))
+plt.subplot(339), plt.imshow(io.imread(img_list[8]))
+plt.show()
+plt.close()
+# delete_list = []
+# for name in img_list:
+# 	count =count +1
+# 	sharp_img = io.imread(fusion_path + '/' + name, as_gray = True)
+# 	fusion_img = io.imread(sharp_path + '/' + name, as_gray = True)
+# 	plt.subplot(121), plt.imshow(sharp_img), plt.title(name)
+# 	plt.subplot(122), plt.imshow(fusion_img)
+# 	plt.show()
+# 	plt.close()
+# 	delete = input("Tell me whether delete this picture,input enter to delete")
+# 	print(name,'whether to delete :',delete)
+# 	if delete=='':
+# 		delete_list.append(fusion_path + '/' + name)
+# 	print(delete_list)
+# print(delete_list)
+# print('all count = ',count)
