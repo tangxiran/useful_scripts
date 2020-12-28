@@ -1,0 +1,12 @@
+
+class node:
+    def __init__(self,next_node_list,rule,value):
+        self.next_node_list = next_node_list
+        self.rule = rule
+        self.value = value
+    
+class graph:
+    def __init__(self,layers_list):
+        self.layers_list =  []
+        for i in range(len(layers_list)):
+            self.layers_list.append(layers_list[i])
