@@ -1,0 +1,36 @@
+# encoding=utf-8
+from pylab import *
+
+def drawMesh3D(z_array,pic_save_place):
+    '''
+    :param z_array: z is 2d array
+    :param pic_save_place: save place
+    :return:
+    '''
+    # z_array is 2d pic
+    import matplotlib.pyplot as plt
+    import numpy as np
+    from mpl_toolkits.mplot3d import Axes3D
+    fig = figure()
+    ax = Axes3D(fig)
+    a,b = z_array.shape
+    X = np.arange(-1*a//2, 1*a//2, 1)
+    Y = np.arange(-1*b//2, 1*b//2, 1)
+    X, Y = np.meshgrid(X, Y)
+    z_array=z_array
+    ax.plot_surface(X, Y, z_array, rstride=1, cstride=1, cmap='hot')
+
+    savefig(pic_save_place, dpi=72)
+    # plt.show()
+
+
+if __name__ == '__main__':
+    import  numpy as np
+    data = np.load('40mode_fushu.npy')
+    a,b,c = data.shape
+    jingdu = int(c**0.5)
+    data = data[0,1,jingdu-100:jingdu+100]
+
+    z_array = np.resize(np.angle(data),(jingdu,jingdu))
+    drawMesh3D(z_array,'00x.png')
+    exit()
