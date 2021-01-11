@@ -10,7 +10,9 @@ def getFileName(dirName):
     return fileList[0]
 
 # 特定的文件后缀保存，筛选后的特定后缀
-def data_select(data_dir,*args):  #
+def file_select(data_dir,*args):  #
+    # data_dir is file_dir//
+    # *args is 'png','jpeg','bmp' so on
     import  glob
     # *args是要筛选的的后缀名称可以选择多个
     length = len(args)
