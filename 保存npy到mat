@@ -42,8 +42,8 @@ def readMat(matFile='',mode_number =46,jingdu=1001):
 
     print()
     ey = np.array(data['xxey'])
-    ey = np.transpose(ey, (1, 0))
-    ez = np.array(data['xxey'])
+    ey = np.transpose(ey, (1, 0))# 为了转换回原本格式，因为读取后会使维度颠倒
+    ez = np.array(data['xxez'])
     ez = np.transpose(ez, (1, 0))
     result = np.zeros(shape=(mode_number,modeg_fengliang,jingdu**2),dtype=complex)
     for i in range(mode_number):
