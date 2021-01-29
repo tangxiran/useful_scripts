@@ -1,0 +1,5 @@
+def draw_change(y_hist):
+    import matplotlib.pyplot as plt
+    x= np.arange(len(y_hist))+1
+    plt.plot(list(x),y_hist)
+    plt.show()
