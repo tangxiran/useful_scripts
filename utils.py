@@ -460,6 +460,171 @@ def copyFileDirFromTo(dir_from,dir_to):
 
 
 
+mport numpy as np
+
+import cv2
+import copy
+def scale_array(src, new_size):
+    res = cv2.resize(src,new_size)
+    return res
+
+def savenpyasexcel(ndarray,output):
+	#ndarray是数组，output是保存的文件位置
+    import pandas as pd
+    data_df = pd.DataFrame(ndarray)  # 关键1，将ndarray格式转换为DataFrame
+    rows,cols = ndarray.shape
+    # 更改表的索引
+    data_index = []
+    for i in range(rows):
+        data_index.append(i)
+    data_df.index = data_index
+    data_df.index = data_index
+    # 更改表的索引
+    data_index = []
+    for i in range(cols):
+        data_index.append(i)
+    data_df.columns = data_index
+
+    # 将文件写入excel表格中
+    writer = pd.ExcelWriter(output)  # 关键2，创建名称为hhh的excel表格
+    data_df.to_excel(writer, 'page_1',
+                     float_format='%.25f')  # 关键3，float_format 控制精度，将data_df写到hhh表格的第一页中。若多个文件，可以在page_2中写入
+    writer.save()  # 关键4
+    return 1
+
+
+
+
+# 再一个矩阵上面绘制斜线,角度为45度
+def drawLineMatrix(shape=(801,801),angle=45,step = 1 ):
+    array =np.zeros(shape)
+    arrayCopy = copy.deepcopy(array)
+    for i in range(0,array.shape[0],step):
+        for j in range(0,array.shape[1],step):
+            startRow,startCol = i,j
+            while(startRow<shape[0] and startCol<shape[1] and arrayCopy[startRow,startCol]!=255):
+                arrayCopy[startRow,startCol]=255
+                startRow+=1
+                startCol+=1
+    return arrayCopy
+
+# 再一个矩阵上面绘制斜点,角度为45度
+def drawDotMatrix(shape=(801,801),angle=45,step = 1,dots=12):
+    array =np.zeros(shape)
+    arrayCopy = copy.deepcopy(array)
+    for i in range(0,array.shape[0],step):
+        for j in range(0,array.shape[1],step):
+            startRow,startCol = i,j
+            while(startRow<shape[0] and startCol<shape[1] and arrayCopy[startRow,startCol]!=255):
+                arrayCopy[startRow,startCol]=255
+                startRow+=dots
+                startCol+=dots
+    return arrayCopy
+
+# 再一个矩阵上面绘制竖直的线,
+def drawLineMatrix_竖直点(shape=(801,801),angle=45,step = 18 ):
+    array =np.zeros(shape)
+    arrayCopy = copy.deepcopy(array)
+    for i in range(0,array.shape[0],step):
+        # for j in range(0,array.shape[1],step):
+        startRow,startCol = i,0
+        while(startRow<shape[0] and startCol<shape[1] and arrayCopy[startRow,startCol]!=255):
+            arrayCopy[startRow,startCol]=255
+            startCol+=step
+    return arrayCopy
+
+# 再一个矩阵上面绘制竖直的线,
+def drawLineMatrix_竖直线(shape=(801,801),angle=45,step = 18 ):
+    array =np.zeros(shape)
+    arrayCopy = copy.deepcopy(array)
+    for i in range(0,array.shape[0],step):
+        # for j in range(0,array.shape[1],step):
+        startRow,startCol = i,0
+        while(startRow<shape[0] and startCol<shape[1] and arrayCopy[startRow,startCol]!=255):
+            arrayCopy[startRow,startCol]=255
+            startCol+=1
+    return arrayCopy
+
+
+def filter加粗轮廓(data,author="wangxutao"):
+    a,b = data.shape
+    datacopy = copy.deepcopy(data)
+    for i in range(1,a-1):
+        for j in range(1,b-1):
+
+            if data[i-1,j]==255 or data[i+1,j]==255 or data[i,j-1]==255 or data[i,j+1]==255 :
+                datacopy[i,j] = 255
+    return datacopy
+
+# 二维数组旋转90度
+def matrixRotate(matrixRotate):
+    array=matrixRotate
+    for i in range(array.shape[0]//2):
+        for j in range(array.shape[1]):
+            temp = array[i,j]
+            array[i,j] =array[ array.shape[0]-i-1,j]
+            array[ array.shape[0]-i-1,j]=temp
+    return array
+
+def getLine(shape=(801,801),angle=45,step=18):
+    array = drawLineMatrix(shape=shape, angle=angle, step=step)
+    # save_pic(array, save_place="pic没加粗.png", style="gray")
+    array = filter加粗轮廓(array, author="wangxutao")
+    array = filter加粗轮廓(array, author="wangxutao")
+    # array= filter加粗轮廓(array,author="wangxutao")
+    # save_pic(array, save_place="pic加粗.png", style="gray")
+    array =matrixRotate(array)
+    # save_pic(array, save_place="pic加粗旋转90度.png", style="gray")
+    return array
+
+def getDots(shape=(801,801),angle=45,step=18):
+    array = drawDotMatrix(shape=shape, angle=angle, step=step)
+    # save_pic(array, save_place="pic没加粗.png", style="gray")
+    array = filter加粗轮廓(array, author="wangxutao")
+    array = filter加粗轮廓(array, author="wangxutao")
+    # array= filter加粗轮廓(array,author="wangxutao")
+    # save_pic(array, save_place="pic加粗.png", style="gray")
+    array =matrixRotate(array)
+    # save_pic(array, save_place="pic加粗旋转90度.png", style="gray")
+    return array
+
+
+def 给原始轮廓加上斜线(originCannyArray,maskOrigin,lineArray):
+    rows,cols = originCannyArray.shape
+    rescopy = copy.deepcopy(originCannyArray)
+    
+    for i in range(rows):
+        for j in range(cols):
+            if maskOrigin[i,j]==255:
+                continue
+            else:
+                rescopy[i,j]=lineArray[i,j]+rescopy[i,j]
+                if(rescopy[i,j]>255):
+                    rescopy[i,j]=255
+    return rescopy
+
+def getLine_竖直的点(shape=(801,801),angle=45,step=18):
+    array = drawLineMatrix_竖直点(shape=shape, angle=angle, step=step)
+    # save_pic(array, save_place="pic没加粗.png", style="gray")
+    array = filter加粗轮廓(array, author="wangxutao")
+    array = filter加粗轮廓(array, author="wangxutao")
+    array= filter加粗轮廓(array,author="wangxutao")
+    # save_pic(array, save_place="pic加粗.png", style="gray")
+    array =matrixRotate(array)
+    # save_pic(array, save_place="pic加粗旋转90度.png", style="gray")
+    return array
+
+def getLine_竖直的线(shape=(801,801),angle=45,step=18):
+    array = drawLineMatrix_竖直线(shape=shape, angle=angle, step=step)
+    # save_pic(array, save_place="pic没加粗.png", style="gray")
+    array = filter加粗轮廓(array, author="wangxutao")
+    array = filter加粗轮廓(array, author="wangxutao")
+    # array= filter加粗轮廓(array,author="wangxutao")
+    # save_pic(array, save_place="pic加粗.png", style="gray")
+    array =matrixRotate(array)
+    # save_pic(array, save_place="pic加粗旋转90度.png", style="gray")
+    return array
+
 if __name__ == '__main__':
 
 
